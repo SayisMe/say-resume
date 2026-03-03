@@ -10,8 +10,11 @@ export default function Hero() {
         <h1 className="text-5xl md:text-7xl font-bold text-gray-900 mb-2">
           {profile.name}
         </h1>
-        <p className="text-2xl md:text-3xl text-gray-400 font-light mb-6">
+        <p className="text-2xl md:text-3xl text-gray-400 font-light mb-3">
           {profile.nameEn}
+        </p>
+        <p className="text-xl text-indigo-500 font-medium mb-6">
+          {profile.title}
         </p>
         <p className="text-lg text-gray-600 max-w-xl mb-10">
           {profile.tagline}
