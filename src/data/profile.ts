@@ -20,19 +20,19 @@ export type Skill = {
 export const skills: Skill[] = [
   {
     category: "Frontend",
-    items: ["React", "Next.js", "TypeScript", "SCSS", "Redux", "React Query", "react-hook-form"],
+    items: ["React", "Next.js", "TypeScript", "SCSS", "Redux Toolkit", "TanStack Query", "Zustand", "react-hook-form"],
   },
   {
     category: "Mobile",
-    items: ["React Native", "Swift", "Kotlin", "Objective-C"],
+    items: ["React Native", "Expo", "Swift", "Kotlin", "Objective-C", "Vision Camera", "Reanimated"],
   },
   {
     category: "DB / Infra",
-    items: ["SQLite", "Firebase", "WebSocket / STOMP"],
+    items: ["SQLite", "TypeORM", "MMKV", "Firebase", "WebSocket / STOMP"],
   },
   {
     category: "Tools",
-    items: ["Git", "ESLint", "Prettier", "Figma", "Unity3D"],
+    items: ["Git", "Detox", "ESLint", "Prettier", "Figma", "OpenCV", "Unity3D"],
   },
 ];
 
@@ -52,16 +52,18 @@ export const experiences: Experience[] = [
     company: "주식회사 비즈비",
     role: "사원 / 프론트엔드 개발",
     period: "2024.09 – 현재",
-    team: "솔루션본부 도토리톡팀",
+    team: "솔루션본부",
     type: "work",
-    project: "Dotori Talk",
+    project: "BizbeeeTalk (구. 도토리톡)",
     description: [
-      "개인 소통 및 업무 협업용 메신저 서비스 Web/App 개발",
-      "React Native 기반 크로스 플랫폼 앱(Android/iOS) 개발",
-      "Next.js 기반 SPA 웹 메신저 개발",
+      "React Native(Expo New Architecture) 기반 기업용 메신저 앱 개발 — 채팅, 일정, 명함 관리 통합",
+      "Vision Camera + OpenCV Worklet으로 실시간 명함 자동 감지 시스템 구현 (Canny 엣지 감지, Contour 인식)",
+      "TypeORM + SQLite(Nitro/SQLCipher) + Outbox 패턴으로 오프라인-온라인 하이브리드 아키텍처 설계",
+      "STOMP/WebSocket 실시간 메시징 + 낙관적 업데이트(Optimistic UI) 구현",
+      "Detox 기반 E2E 테스트 자동화 구축",
       "AOS / iOS 빌드 및 배포",
     ],
-    skills: ["React Native", "Next.js", "TypeScript", "React Query", "Redux", "SCSS"],
+    skills: ["React Native", "Expo", "TypeScript", "Redux Toolkit", "TanStack Query", "TypeORM", "SQLite", "STOMP/WebSocket", "OpenCV", "Detox"],
   },
   {
     company: "한국산업은행",
@@ -117,17 +119,18 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    title: "Dotoritalk",
-    period: "2024.12 – 진행중",
-    description: "개인 소통 및 업무 협업용 메신저 서비스 (AOS / iOS / Web)",
+    title: "BizbeeeTalk",
+    period: "2024.09 – 진행중",
+    description: "기업용 메신저 앱 — 채팅 · 일정 · 명함 관리 통합 서비스 (AOS / iOS)",
     detail: [
-      "STOMP/WebSocket 기반 실시간 채팅 및 낙관적 업데이트(Optimistic UI) 구현",
-      "npm 패키지 직접 제작: react-native-share-media (Turbo Module)",
-      "Kotlin/Swift/Objective-C 활용 Android/iOS 네이티브 모듈 9개 개발",
-      "Redux 24 slice 모듈화 상태 관리 + SQLite 14테이블 설계",
-      "FlashList/FlatList 성능 최적화 및 인메모리 캐시 전략 구현",
+      "Vision Camera + OpenCV Worklet으로 실시간 명함 자동 감지 구현 (카메라 프레임에서 사각형 인식)",
+      "TypeORM + SQLite(Nitro/SQLCipher) + Outbox 패턴 오프라인 아키텍처 — 네트워크 단절 시에도 메시지 손실 없음",
+      "STOMP/WebSocket 실시간 채팅 + 낙관적 업데이트(Optimistic UI) 및 읽음 동기화",
+      "150+ Custom Hooks 구조 (useGet*, useAdd*, useSync*, useSlidingWindowChatMessages 등)",
+      "npm 패키지 직접 제작: react-native-share-media (TurboModule) — iOS Share Extension 포함",
+      "Detox 기반 E2E 테스트 자동화 구축 / Kotlin·Swift·Objective-C 네이티브 모듈 개발",
     ],
-    tech: ["React Native", "Next.js", "TypeScript", "Redux", "React Query", "SQLite", "STOMP/WebSocket", "Swift", "Kotlin"],
+    tech: ["React Native 0.81", "Expo New Architecture", "TypeScript", "Redux Toolkit", "TanStack Query v5", "Zustand", "TypeORM", "SQLite", "STOMP/WebSocket", "OpenCV", "Vision Camera", "Detox"],
     demo: "https://www.npmjs.com/package/react-native-share-media",
   },
   {
