@@ -1,12 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 const navItems = [
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Experience", href: "#experience" },
   { label: "Projects", href: "#projects" },
+  { label: "Portfolio", href: "/portfolio" },
   { label: "Education", href: "#education" },
   { label: "Contact", href: "#contact" },
 ];
@@ -31,12 +33,21 @@ export default function Navigation() {
         <ul className="flex gap-6">
           {navItems.map((item) => (
             <li key={item.href}>
-              <a
-                href={item.href}
-                className="text-sm text-gray-600 hover:text-indigo-600 transition-colors"
-              >
-                {item.label}
-              </a>
+              {item.href.startsWith("/") ? (
+                <Link
+                  href={item.href}
+                  className="text-sm text-gray-600 hover:text-indigo-600 transition-colors"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  href={item.href}
+                  className="text-sm text-gray-600 hover:text-indigo-600 transition-colors"
+                >
+                  {item.label}
+                </a>
+              )}
             </li>
           ))}
         </ul>
