@@ -115,6 +115,7 @@ export type Project = {
   demo?: string;
   period: string;
   highlight?: string;
+  portfolioHref?: string;
 };
 
 export const projects: Project[] = [
@@ -132,6 +133,7 @@ export const projects: Project[] = [
     ],
     tech: ["React Native 0.81", "Expo New Architecture", "TypeScript", "Redux Toolkit", "TanStack Query v5", "Zustand", "TypeORM", "SQLite", "STOMP/WebSocket", "OpenCV", "Vision Camera", "Detox"],
     demo: "https://www.npmjs.com/package/react-native-share-media",
+    portfolioHref: "/portfolio",
   },
   {
     title: "MoodMemo",
