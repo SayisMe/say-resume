@@ -1,0 +1,167 @@
+{
+  "version": "2.0",
+  "lastUpdated": "2026-03-04T09:26:34.296Z",
+  "activeFeatures": [
+    "data",
+    "say-resume",
+    "portfolio",
+    "[slug]"
+  ],
+  "primaryFeature": "data",
+  "features": {
+    "data": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-04T07:09:08.215Z",
+        "lastUpdated": "2026-03-04T07:10:13.007Z"
+      },
+      "lastFile": "/Users/say/Documents/GitHub/say-resume/src/data/profile.ts"
+    },
+    "say-resume": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-04T07:09:16.589Z",
+        "lastUpdated": "2026-03-04T09:26:34.296Z"
+      },
+      "lastFile": "/Users/say/Documents/GitHub/say-resume/src/components/Projects.tsx"
+    },
+    "portfolio": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-04T07:09:28.190Z",
+        "lastUpdated": "2026-03-04T07:09:28.190Z"
+      },
+      "lastFile": "/Users/say/Documents/GitHub/say-resume/src/app/portfolio/page.tsx"
+    },
+    "[slug]": {
+      "phase": "do",
+      "phaseNumber": 3,
+      "matchRate": null,
+      "iterationCount": 0,
+      "requirements": [],
+      "documents": {},
+      "timestamps": {
+        "started": "2026-03-04T07:09:57.196Z",
+        "lastUpdated": "2026-03-04T07:09:57.196Z"
+      },
+      "lastFile": "/Users/say/Documents/GitHub/say-resume/src/app/portfolio/[slug]/page.tsx"
+    }
+  },
+  "pipeline": {
+    "currentPhase": 1,
+    "level": "Dynamic",
+    "phaseHistory": []
+  },
+  "session": {
+    "startedAt": "2026-03-04T01:53:51.410Z",
+    "onboardingCompleted": false,
+    "lastActivity": "2026-03-04T09:26:34.296Z"
+  },
+  "history": [
+    {
+      "timestamp": "2026-03-04T07:09:08.215Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-04T07:09:16.589Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-04T07:09:28.190Z",
+      "feature": "portfolio",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-04T07:09:48.191Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-04T07:09:57.196Z",
+      "feature": "[slug]",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-04T07:10:01.694Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-04T07:10:05.847Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-04T07:10:10.014Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-04T07:10:13.007Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-04T07:10:15.985Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-04T07:10:21.938Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-04T09:26:28.882Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-04T09:26:29.529Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-04T09:26:33.713Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-04T09:26:34.296Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    }
+  ]
+}
