@@ -46,7 +46,7 @@ export default function Projects() {
                 ))}
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex gap-4 flex-wrap">
                 {project.github && (
                   <a
                     href={project.github}
