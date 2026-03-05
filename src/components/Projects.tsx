@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { projects } from "@/data/profile";
 
 export default function Projects() {
@@ -46,7 +47,7 @@ export default function Projects() {
                 ))}
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex gap-4 flex-wrap">
                 {project.github && (
                   <a
                     href={project.github}
@@ -66,6 +67,14 @@ export default function Projects() {
                   >
                     npm →
                   </a>
+                )}
+                {project.portfolioHref && (
+                  <Link
+                    href={project.portfolioHref}
+                    className="text-sm text-indigo-500 hover:text-indigo-700 font-medium transition-colors"
+                  >
+                    기술 포트폴리오 →
+                  </Link>
                 )}
               </div>
             </div>
