@@ -3,9 +3,15 @@ export type TextBlock = {
   content: string;
 };
 
-export type DiagramBlock = {
-  type: "diagram";
+export type MermaidBlock = {
+  type: "mermaid";
   content: string;
+};
+
+export type TableBlock = {
+  type: "table";
+  headers: string[];
+  rows: string[][];
 };
 
 export type CodeBlock = {
@@ -19,7 +25,7 @@ export type ListBlock = {
   items: string[];
 };
 
-export type Block = TextBlock | DiagramBlock | CodeBlock | ListBlock;
+export type Block = TextBlock | MermaidBlock | TableBlock | CodeBlock | ListBlock;
 
 export type PortfolioSection = {
   title: string;
@@ -55,39 +61,21 @@ export const portfolioItems: PortfolioItem[] = [
         title: "아키텍처 다이어그램",
         blocks: [
           {
-            type: "diagram",
-            content: `┌─────────────────────────────────────────────────────────┐
-│                        UI Layer                         │
-│   (React Native Screens / Components)                   │
-└────────────────┬────────────────┬───────────────────────┘
-                 │ Write          │ Read
-                 ▼                ▼
-┌───────────────────┐    ┌──────────────────────┐
-│     Action        │    │     Repository        │
-│   (진입점)        │    │   (읽기 전용 접근)    │
-│                   │    │                       │
-│ - 파라미터 정규화 │    │ - 로컬DB 또는 서버   │
-│ - 권한 체크       │    │   에서 데이터 제공    │
-│ - Engine 라우팅   │    │ - 쿼리 결과 조합      │
-└────────┬──────────┘    └──────────────────────┘
-         │                         ▲
-         ▼                         │
-┌───────────────────────────────────────────────┐
-│                   Engine                       │
-│           (서버 ↔ 로컬 DB 동기화)              │
-│                                               │
-│  ① 서버 API 호출                              │
-│  ② 응답을 로컬 DB에 저장 (upsert)            │
-│  ③ React Query 캐시 무효화                   │
-│  ④ Session 상태 관리                         │
-└──────────┬────────────────────────────────────┘
-           │
-    ┌──────┴──────┐
-    ▼             ▼
-┌─────────┐  ┌──────────┐
-│ SQLite  │  │  Server  │
-│ Local DB│  │   API    │
-└─────────┘  └──────────┘`,
+            type: "mermaid",
+            content: `flowchart TD
+    UI["UI Layer<br/>(React Native Screens / Components)"]
+    Action["Action 진입점<br/>파라미터 정규화 · 권한 체크 · Engine 라우팅"]
+    Repo["Repository 읽기 전용<br/>로컬DB / 서버에서 데이터 제공<br/>쿼리 결과 조합"]
+    Engine["Engine<br/>서버 ↔ 로컬 DB 동기화<br/>① 서버 API 호출<br/>② 응답을 로컬 DB에 저장 upsert<br/>③ React Query 캐시 무효화<br/>④ Session 상태 관리"]
+    SQLite["SQLite Local DB"]
+    Server["Server API"]
+
+    UI -->|Write| Action
+    UI -->|Read| Repo
+    Action --> Engine
+    Engine -.->|데이터 제공| Repo
+    Engine --> SQLite
+    Engine --> Server`,
           },
         ],
       },
@@ -141,26 +129,26 @@ class ChatEngine {
         title: "2단계 Active Sync 전략",
         blocks: [
           {
-            type: "diagram",
-            content: `채팅방 진입 시
-    │
-    ▼
-1단계: Count Sync
-    ├─ 서버 최신 메시지 개수 확인
-    ├─ 로컬 DB 개수와 비교
-    └─ 부족한 만큼 페이지 단위로 가져오기 (LIMIT 50)
-    │
-    ▼
-2단계: Delta Sync
-    ├─ 마지막 동기화 이후 변경된 메시지만 가져오기
-    ├─ 수정된 메시지 업데이트
-    ├─ 리액션 업데이트
-    └─ 읽음 처리 동기화
-    │
-    ▼
-로컬 DB 업데이트 완료
-→ React Query 캐시 무효화
-→ UI 자동 리렌더링`,
+            type: "mermaid",
+            content: `flowchart TD
+    Start([채팅방 진입])
+
+    subgraph Sync1["1단계: Count Sync"]
+      direction TB
+      A1[서버 최신 메시지 개수 확인] --> A2[로컬 DB 개수와 비교]
+      A2 --> A3["부족한 만큼 페이지 단위로 가져오기 (LIMIT 50)"]
+    end
+
+    subgraph Sync2["2단계: Delta Sync"]
+      direction TB
+      B1[마지막 동기화 이후 변경된 메시지만] --> B2[수정된 메시지 업데이트]
+      B2 --> B3[리액션 업데이트] --> B4[읽음 처리 동기화]
+    end
+
+    Start --> Sync1 --> Sync2
+    Sync2 --> Done[로컬 DB 업데이트 완료]
+    Done --> Inv[React Query 캐시 무효화]
+    Inv --> End([UI 자동 리렌더링])`,
           },
         ],
       },
@@ -183,30 +171,23 @@ class ChatEngine {
         title: "전체 STOMP 아키텍처",
         blocks: [
           {
-            type: "diagram",
-            content: `┌──────────────────────────────────────────────────────────┐
-│                    StompProvider                          │
-│  (Context Provider — 앱 전체에 연결 상태 제공)            │
-│                                                          │
-│  ┌─────────────────────────────────────────────────┐    │
-│  │              StompClient (Wrapper)               │    │
-│  │  - @stomp/stompjs Client 래핑                   │    │
-│  │  - Map<destination, Subscription> 관리           │    │
-│  │  - 재연결 시 자동 _resubscribe()                │    │
-│  └──────────────────────┬──────────────────────────┘    │
-└─────────────────────────│────────────────────────────────┘
-                          │
-               WebSocket Connection
-                          │
-              ┌───────────▼───────────┐
-              │    STOMP Broker       │
-              │  (Server-side)        │
-              └───────────┬───────────┘
-                          │
-           ┌──────────────┴──────────────┐
-           ▼                             ▼
-  /sub/public/{profileId}      /sub/chat/{roomId}
-  (알림, 공개 이벤트)           (채팅 메시지)`,
+            type: "mermaid",
+            content: `flowchart TB
+    subgraph Provider["StompProvider (앱 전체에 연결 상태 제공)"]
+      subgraph Wrapper["StompClient Wrapper"]
+        W1["@stomp/stompjs Client 래핑"]
+        W2["Map&lt;destination, Subscription&gt; 관리"]
+        W3["재연결 시 자동 _resubscribe()"]
+      end
+    end
+
+    Broker["STOMP Broker (Server-side)"]
+    Sub1["/sub/public/{profileId}<br/>알림 · 공개 이벤트"]
+    Sub2["/sub/chat/{roomId}<br/>채팅 메시지"]
+
+    Provider -->|WebSocket Connection| Broker
+    Broker --> Sub1
+    Broker --> Sub2`,
           },
         ],
       },
@@ -299,30 +280,18 @@ export function SendChatBase<T>(params: {
         title: "이중 Axios 구조",
         blocks: [
           {
-            type: "diagram",
-            content: `┌─────────────────────────────────────────────────────────┐
-│                    client.ts                             │
-│  (메인 Axios — 모든 API 요청)                           │
-│                                                          │
-│  Request Interceptor:                                    │
-│  1. NetInfo → 오프라인이면 (GET 제외) toast 표시        │
-│  2. Redux에서 accessToken 읽기                          │
-│  3. Authorization: Bearer {token} 헤더 설정             │
-│                                                          │
-│  Response Interceptor:                                   │
-│  ├─ 1002: 토큰 오류 → logout()                         │
-│  ├─ 1003: 권한 없음 → logout()                         │
-│  ├─ 1004: 리프레시 만료 → logout()                     │
-│  └─ 1005: 액세스 만료 → 토큰 갱신 후 원요청 재시도     │
-└──────────────────────────────────────────────────────────┘
-                          │ 1005 발생 시
-                          ▼
-┌─────────────────────────────────────────────────────────┐
-│                  axiosClient.ts                          │
-│  (토큰 갱신 전용 — 인터셉터 없음, 무한 루프 방지)       │
-│                                                          │
-│  POST /auth/refresh → 새 accessToken, refreshToken      │
-└──────────────────────────────────────────────────────────┘`,
+            type: "mermaid",
+            content: `flowchart TD
+    subgraph Main["client.ts — 메인 Axios (모든 API 요청)"]
+      direction TB
+      Req["Request Interceptor<br/>① NetInfo → 오프라인이면 toast<br/>② Redux에서 accessToken 읽기<br/>③ Authorization: Bearer 헤더 설정"]
+      Res["Response Interceptor<br/>1002·1003 → 토큰 오류 → logout<br/>1004 → 리프레시 만료 → logout<br/>1005 → 액세스 만료 → 갱신 후 재시도"]
+    end
+
+    Refresh["axiosClient.ts 토큰 갱신 전용<br/>인터셉터 없음 (무한 루프 방지)<br/>POST /auth/refresh"]
+
+    Res -->|"1005 발생 시"| Refresh
+    Refresh -->|"새 accessToken / refreshToken"| Res`,
           },
           {
             type: "list",
@@ -396,25 +365,20 @@ export function SendChatBase<T>(params: {
         title: "세 가지 상태 관리의 역할 분리",
         blocks: [
           {
-            type: "diagram",
-            content: `┌─────────────────────────────────────────────────────────────────┐
-│                       상태 관리 계층                             │
-├──────────────────┬──────────────────┬──────────────────────────┤
-│   Redux Toolkit  │   React Query    │        Zustand            │
-│   + redux-persist│   (TanStack v5)  │                           │
-├──────────────────┼──────────────────┼──────────────────────────┤
-│ 영속적 UI 상태   │ 서버 데이터 캐시  │ 간단한 런타임 상태        │
-│                  │                  │                           │
-│ - Auth 토큰      │ - 메시지 목록     │ - Listenbook              │
-│ - 사용자 정보    │ - 채팅방 목록     │   (구독 중인 roomId Set)  │
-│ - 테마/설정      │ - 친구 목록       │ - 임시 프로필 캐시        │
-│ - 북마크         │ - 검색 결과       │                           │
-│                  │                  │                           │
-│ AsyncStorage에   │ 메모리에만 존재   │ 메모리에만 존재           │
-│ 영속 저장        │ (앱 재시작 시 초기화) │ (빠른 접근 최적화)   │
-└──────────────────┴──────────────────┴──────────────────────────┘
-
-규칙: Redux에 서버 데이터 저장 금지 / React Query에 UI 상태 저장 금지`,
+            type: "table",
+            headers: ["Redux Toolkit + redux-persist", "React Query (TanStack v5)", "Zustand"],
+            rows: [
+              ["영속적 UI 상태", "서버 데이터 캐시", "간단한 런타임 상태"],
+              ["Auth 토큰", "메시지 목록", "Listenbook (구독 중인 roomId Set)"],
+              ["사용자 정보", "채팅방 목록", "임시 프로필 캐시"],
+              ["테마/설정", "친구 목록", ""],
+              ["북마크", "검색 결과", ""],
+              ["AsyncStorage에 영속 저장", "메모리에만 존재 (앱 재시작 시 초기화)", "메모리에만 존재 (빠른 접근 최적화)"],
+            ],
+          },
+          {
+            type: "text",
+            content: "규칙: Redux에 서버 데이터 저장 금지 / React Query에 UI 상태 저장 금지",
           },
         ],
       },
@@ -422,20 +386,26 @@ export function SendChatBase<T>(params: {
         title: "역할 분리 판단 기준",
         blocks: [
           {
-            type: "diagram",
-            content: `새 상태를 어디에 넣을까?
+            type: "mermaid",
+            content: `flowchart TD
+    Start([새 상태를 어디에 넣을까?])
 
-Q1. 서버에서 가져오는 데이터인가?
-  → YES: React Query (queryFn으로 fetching, 캐시 자동 관리)
-  → NO: 계속
+    Q1{"서버에서 가져오는 데이터?"}
+    Q2{"앱 재시작 후에도 유지?"}
+    Q3{"여러 컴포넌트가 동시 접근?"}
 
-Q2. 앱 재시작 후에도 유지해야 하는가?
-  → YES: Redux + redux-persist (AsyncStorage 저장)
-  → NO: 계속
+    RQ["React Query<br/>queryFn으로 fetching<br/>캐시 자동 관리"]
+    Redux["Redux + redux-persist<br/>AsyncStorage 저장"]
+    Zustand["Zustand<br/>전역 접근 · 간단 설정"]
+    Local["컴포넌트 로컬 state<br/>useState"]
 
-Q3. 여러 컴포넌트가 동시에 접근하는가?
-  → YES: Zustand (전역 접근, 간단한 설정)
-  → NO: 컴포넌트 로컬 state (useState)`,
+    Start --> Q1
+    Q1 -->|YES| RQ
+    Q1 -->|NO| Q2
+    Q2 -->|YES| Redux
+    Q2 -->|NO| Q3
+    Q3 -->|YES| Zustand
+    Q3 -->|NO| Local`,
           },
         ],
       },
@@ -480,23 +450,19 @@ const persistConfig = {
         title: "데이터베이스 구조",
         blocks: [
           {
-            type: "diagram",
-            content: `bizbeetalk_offline.db
-│
-├─ chat_messages        # 채팅 메시지
-│   ├─ active_id        # 서버 순번 (정렬 기준)
-│   ├─ message_id       # 서버 메시지 ID (고유)
-│   ├─ local_id         # 로컬 임시 ID (발송 전)
-│   ├─ room_id          # 채팅방 ID
-│   ├─ sender           # 발신자 JSON
-│   ├─ write_date_time  # 작성 시간
-│   ├─ type             # CHAT/REPLY/FILE/EMOTICON/...
-│   ├─ remove           # 소프트 삭제 플래그 (0/1)
-│   └─ data             # 전체 메시지 JSON
-│
-├─ rooms                # 채팅방 목록
-├─ members              # 채팅방 멤버
-└─ ... (10+ 테이블)`,
+            type: "mermaid",
+            content: `flowchart TD
+    DB["bizbeetalk_offline.db"]
+
+    CM["chat_messages<br/>active_id · message_id · local_id<br/>room_id · sender JSON<br/>write_date_time · type<br/>remove(소프트 삭제) · data JSON"]
+    Rooms["rooms<br/>채팅방 목록"]
+    Members["members<br/>채팅방 멤버"]
+    More["... 10+ 테이블"]
+
+    DB --> CM
+    DB --> Rooms
+    DB --> Members
+    DB --> More`,
           },
         ],
       },
@@ -598,28 +564,29 @@ async upsertMessages(messages: ChatMessageType[]) {
         title: "채팅 화면 구조",
         blocks: [
           {
-            type: "diagram",
-            content: `ChatScreen
-├─ ChatHeader (SelectHeader / SearchHeader)
-│   ├─ 채팅방 이름, 멤버 수
-│   └─ 검색 모드 전환
-│
-├─ ChatMessageView            ← 핵심 컴포넌트
-│   ├─ FlatList (양방향 무한 스크롤)
-│   ├─ 메시지 타입별 렌더러
-│   │   ├─ TextMessage       (텍스트 + 멘션)
-│   │   ├─ FileMessage       (파일 다운로드)
-│   │   ├─ ImageMessage      (썸네일 + 뷰어)
-│   │   ├─ EmoticonMessage   (GIF 이모티콘)
-│   │   ├─ BizCardMessage    (명함 미리보기)
-│   │   ├─ ReplyMessage      (인용 답장)
-│   │   └─ LinkMessage       (링크 미리보기)
-│   └─ DateSeparator         (날짜 구분선)
-│
-└─ ChatFooter
-    ├─ TextKeyboard           (텍스트 입력 + 멘션)
-    ├─ EmoticonKeyboard       (카테고리별 이모티콘)
-    └─ AttachmentMenu         (파일/사진 첨부)`,
+            type: "mermaid",
+            content: `flowchart TD
+    CS[ChatScreen]
+    CH["ChatHeader<br/>채팅방 이름 · 멤버 수 · 검색 모드 전환"]
+    CMV["ChatMessageView 핵심 컴포넌트<br/>FlatList 양방향 무한 스크롤"]
+    CF[ChatFooter]
+
+    TM["TextMessage — 텍스트+멘션"]
+    FM["FileMessage — 파일 다운로드"]
+    IM["ImageMessage — 썸네일+뷰어"]
+    EM["EmoticonMessage — GIF 이모티콘"]
+    BM["BizCardMessage — 명함 미리보기"]
+    RM["ReplyMessage — 인용 답장"]
+    LM["LinkMessage — 링크 미리보기"]
+    DS["DateSeparator — 날짜 구분선"]
+
+    TK["TextKeyboard — 텍스트 입력+멘션"]
+    EK["EmoticonKeyboard — 이모티콘 키보드"]
+    AM["AttachmentMenu — 파일/사진 첨부"]
+
+    CS --> CH & CMV & CF
+    CMV --> TM & FM & IM & EM & BM & RM & LM & DS
+    CF --> TK & EK & AM`,
           },
         ],
       },
@@ -723,17 +690,21 @@ function BizCardPreview() {
         title: "해결한 동시성 문제",
         blocks: [
           {
-            type: "diagram",
-            content: `Race Condition 시나리오:
-──────────────────────────────────────────────────────────
-시간 →   T1          T2          T3          T4
+            type: "mermaid",
+            content: `sequenceDiagram
+    participant A as STOMP 수신 Thread
+    participant M as AsyncMutex
+    participant DB as SQLite DB
+    participant B as Active Sync Thread
 
-Thread A: [STOMP 메시지 수신] → [DB insert 시도]
-Thread B:                [Active Sync 시작] → [DB insert 시도]
-                                         ↑
-                              ⚠️ 동일 메시지 중복 삽입 또는
-                              ⚠️ Sync 중 STOMP 메시지 누락
-──────────────────────────────────────────────────────────`,
+    A->>M: acquire()
+    M-->>A: locked ✓
+    A->>DB: insert 메시지
+    B->>M: acquire() [큐에서 대기]
+    DB-->>A: 완료
+    A->>M: release()
+    M-->>B: locked ✓
+    B->>DB: sync 작업 (순차 실행)`,
           },
         ],
       },
@@ -782,21 +753,18 @@ Thread B:                [Active Sync 시작] → [DB insert 시도]
         title: "Outbox 패턴 (메시지 발송 흐름)",
         blocks: [
           {
-            type: "diagram",
-            content: `사용자 입력
-    │
-    ▼
-[1] 로컬 DB에 임시 저장 (local_id, status: 'pending')
-    → UI에 즉시 표시 (낙관적 업데이트)
-    │
-    ▼
-[2] STOMP로 발송 + Echo 대기 (5초 타임아웃)
-    │
-    ├─ Echo 수신 성공
-    │       └─ [3] 서버 message_id, active_id 반영 (status: 'sent')
-    │
-    └─ 타임아웃 (5초)
-            └─ [4] status: 'failed' + 재전송 버튼 표시`,
+            type: "mermaid",
+            content: `flowchart TD
+    Input([사용자 입력])
+    S1["① 로컬 DB에 임시 저장<br/>local_id 부여 · status: pending"]
+    S2["② UI에 즉시 표시 (낙관적 업데이트)"]
+    S3["③ STOMP로 발송<br/>Echo 대기 (5초 타임아웃)"]
+    Success["④ Echo 수신 성공<br/>서버 message_id · active_id 반영<br/>status: sent"]
+    Fail["⑤ 타임아웃 (5초)<br/>status: failed<br/>재전송 버튼 표시"]
+
+    Input --> S1 --> S2 --> S3
+    S3 -->|Echo 수신| Success
+    S3 -->|타임아웃| Fail`,
           },
           {
             type: "list",

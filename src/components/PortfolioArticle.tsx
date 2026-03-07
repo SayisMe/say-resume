@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Block, PortfolioItem } from "@/data/portfolio";
+import MermaidDiagram from "./MermaidDiagram";
 
 type Props = {
   item: PortfolioItem;
@@ -16,14 +17,41 @@ function renderBlock(block: Block, index: number) {
         </p>
       );
 
-    case "diagram":
+    case "mermaid":
+      return <MermaidDiagram key={index} content={block.content} />;
+
+    case "table":
       return (
-        <pre
-          key={index}
-          className="bg-gray-900 text-green-400 font-mono text-xs leading-relaxed p-5 rounded-xl overflow-x-auto whitespace-pre"
-        >
-          {block.content}
-        </pre>
+        <div key={index} className="overflow-x-auto rounded-xl border border-gray-100">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="bg-indigo-50">
+                {block.headers.map((h, i) => (
+                  <th
+                    key={i}
+                    className="px-4 py-3 text-left font-semibold text-indigo-700 border-b border-indigo-100 whitespace-nowrap"
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {block.rows.map((row, ri) => (
+                <tr key={ri} className={ri % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                  {row.map((cell, ci) => (
+                    <td
+                      key={ci}
+                      className="px-4 py-2.5 text-gray-600 border-b border-gray-100 align-top"
+                    >
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       );
 
     case "code":
