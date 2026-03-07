@@ -14,8 +14,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SEHUI JEONG — Frontend Developer",
-  description: "정세희의 포트폴리오 사이트입니다.",
+  title: "정세희 — Front-End & React Native Developer",
+  description:
+    "React Native · Next.js · TypeScript 개발자 정세희의 포트폴리오. 기업용 메신저 앱, 오프라인 아키텍처, 실시간 채팅 등을 개발했습니다.",
+  openGraph: {
+    title: "정세희 — Front-End & React Native Developer",
+    description:
+      "React Native · Next.js · TypeScript 개발자 정세희의 포트폴리오.",
+    locale: "ko_KR",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
