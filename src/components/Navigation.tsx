@@ -15,6 +15,7 @@ const navItems = [
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -25,12 +26,14 @@ export default function Navigation() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white/90 backdrop-blur-sm shadow-sm" : "bg-transparent"
+        scrolled || open ? "bg-white/90 backdrop-blur-sm shadow-sm" : "bg-transparent"
       }`}
     >
       <nav className="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
         <span className="font-bold text-indigo-600 tracking-tight">SJ</span>
-        <ul className="flex gap-6">
+
+        {/* 데스크탑 메뉴 */}
+        <ul className="hidden md:flex gap-6">
           {navItems.map((item) => (
             <li key={item.href}>
               {item.href.startsWith("/") ? (
@@ -51,7 +54,59 @@ export default function Navigation() {
             </li>
           ))}
         </ul>
+
+        {/* 모바일 햄버거 버튼 */}
+        <button
+          className="md:hidden flex flex-col justify-center gap-1.5 w-8 h-8"
+          onClick={() => setOpen((v) => !v)}
+          aria-label="메뉴 열기/닫기"
+        >
+          <span
+            className={`block h-0.5 bg-gray-700 transition-all duration-300 ${
+              open ? "w-5 rotate-45 translate-y-2" : "w-5"
+            }`}
+          />
+          <span
+            className={`block h-0.5 bg-gray-700 transition-all duration-300 ${
+              open ? "opacity-0 w-5" : "w-5"
+            }`}
+          />
+          <span
+            className={`block h-0.5 bg-gray-700 transition-all duration-300 ${
+              open ? "w-5 -rotate-45 -translate-y-2" : "w-5"
+            }`}
+          />
+        </button>
       </nav>
+
+      {/* 모바일 메뉴 */}
+      {open && (
+        <div className="md:hidden border-t border-gray-100 px-6 py-5">
+          <ul className="flex flex-col gap-4">
+            {navItems.map((item) => (
+              <li key={item.href}>
+                {item.href.startsWith("/") ? (
+                  <Link
+                    href={item.href}
+                    className="text-gray-700 hover:text-indigo-600 transition-colors font-medium"
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <a
+                    href={item.href}
+                    className="text-gray-700 hover:text-indigo-600 transition-colors font-medium"
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </header>
   );
 }
