@@ -116,11 +116,17 @@ export type Project = {
   period: string;
   highlight?: string;
   portfolioHref?: string;
+  logoImage?: string;
+  logoColor?: string;
+  logoLabel?: string;
 };
 
 export const projects: Project[] = [
   {
     title: "BizbeeeTalk",
+    logoImage: "/images/bizbeeetalk-logo.png",
+    logoColor: "bg-indigo-600",
+    logoLabel: "BT",
     period: "2024.09 – 진행중",
     description: "기업용 메신저 앱 — 채팅 · 일정 · 명함 관리 통합 서비스 (AOS / iOS)",
     detail: [
@@ -137,6 +143,9 @@ export const projects: Project[] = [
   },
   {
     title: "MoodMemo",
+    logoImage: "/images/moodmemo-logo.png",
+    logoColor: "bg-emerald-500",
+    logoLabel: "MM",
     period: "2023.06 – 2023.11",
     description: "감정스탬프와 메모 한줄로 만드는 AI 일기앱 서비스",
     detail: [

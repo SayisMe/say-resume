@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { projects } from "@/data/profile";
 
@@ -15,11 +16,32 @@ export default function Projects() {
               key={i}
               className="bg-white border border-gray-100 rounded-2xl p-8 hover:border-indigo-200 hover:shadow-md transition-all flex flex-col"
             >
-              <div className="flex items-start justify-between gap-2 mb-2">
-                <h4 className="text-xl font-bold text-gray-900">{project.title}</h4>
-                <span className="text-xs text-gray-400 whitespace-nowrap mt-1">{project.period}</span>
+              <div className="flex items-start justify-between gap-4 mb-4">
+                <div className="flex items-center gap-3">
+                  {(project.logoImage || (project.logoColor && project.logoLabel)) && (
+                    <div
+                      className={`w-11 h-11 rounded-xl shrink-0 overflow-hidden flex items-center justify-center ${project.logoImage ? "bg-white border border-gray-100" : project.logoColor}`}
+                    >
+                      {project.logoImage ? (
+                        <Image
+                          src={project.logoImage}
+                          alt={`${project.title} 로고`}
+                          width={44}
+                          height={44}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-white text-xs font-bold tracking-tight">
+                          {project.logoLabel}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                  <h4 className="text-xl font-bold text-gray-900">{project.title}</h4>
+                </div>
+                <span className="text-xs text-gray-400 whitespace-nowrap mt-1 shrink-0">{project.period}</span>
               </div>
-              <p className="text-gray-600 mb-4">{project.description}</p>
+              <p className="text-gray-600 mb-4 text-sm">{project.description}</p>
 
               <ul className="space-y-1.5 mb-5 flex-1">
                 {project.detail.map((d, j) => (
