@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "lastUpdated": "2026-03-04T09:26:34.296Z",
+  "lastUpdated": "2026-03-07T18:00:04.023Z",
   "activeFeatures": [
     "data",
     "say-resume",
@@ -18,7 +18,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-03-04T07:09:08.215Z",
-        "lastUpdated": "2026-03-04T07:10:13.007Z"
+        "lastUpdated": "2026-03-07T17:59:54.158Z"
       },
       "lastFile": "/Users/say/Documents/GitHub/say-resume/src/data/profile.ts"
     },
@@ -31,7 +31,7 @@
       "documents": {},
       "timestamps": {
         "started": "2026-03-04T07:09:16.589Z",
-        "lastUpdated": "2026-03-04T09:26:34.296Z"
+        "lastUpdated": "2026-03-07T18:00:04.023Z"
       },
       "lastFile": "/Users/say/Documents/GitHub/say-resume/src/components/Projects.tsx"
     },
@@ -70,7 +70,7 @@
   "session": {
     "startedAt": "2026-03-04T01:53:51.410Z",
     "onboardingCompleted": false,
-    "lastActivity": "2026-03-04T09:26:34.296Z"
+    "lastActivity": "2026-03-07T18:00:04.023Z"
   },
   "history": [
     {
@@ -159,6 +159,168 @@
     },
     {
       "timestamp": "2026-03-04T09:26:34.296Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T07:12:00.403Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T07:12:23.066Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T07:15:21.602Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T07:15:27.194Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T07:15:30.648Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T07:15:33.476Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T07:15:40.089Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T07:15:43.463Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T07:17:24.088Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T08:11:15.037Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T08:11:15.171Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T08:11:26.555Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T08:12:29.388Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T08:12:39.611Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T08:12:50.413Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T08:13:02.884Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T08:13:16.157Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T08:13:25.340Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T08:13:34.516Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T08:13:50.159Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T08:13:58.782Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T08:14:08.575Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T17:59:47.360Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T17:59:51.247Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T17:59:54.158Z",
+      "feature": "data",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T17:59:57.524Z",
+      "feature": "say-resume",
+      "phase": "do",
+      "action": "updated"
+    },
+    {
+      "timestamp": "2026-03-07T18:00:04.023Z",
       "feature": "say-resume",
       "phase": "do",
       "action": "updated"
